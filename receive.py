@@ -2,7 +2,7 @@
 import pika
 
 creds = pika.PlainCredentials('drenax', 'kirkjt03')
-connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.10.115', 5672, '/', creds))
+connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.10.114', 5672, '/', creds))
 channel = connection.channel()
 
 channel.queue_declare(queue='data')
