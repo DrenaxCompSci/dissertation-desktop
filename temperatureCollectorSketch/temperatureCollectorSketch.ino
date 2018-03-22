@@ -1,3 +1,6 @@
+#include <ArduinoJson.h>
+
+// Definining Sensor pins
 const int tempPin = A0;
 const int lightPin = A1;
 
@@ -8,24 +11,27 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  StaticJsonBuffer<512> jsonBuffer;
+  JsonObject& data = jsonBuffer.createObject(); // creates space for a json object 
+  
   // -- Temperature --
   int sensorVal = analogRead(tempPin);
-  //Serial.print("Temperature Sensor Value: ");
-  //Serial.println(sensorVal);
-
   float voltage = (sensorVal/1024.0) * 5.0;
-  float temperature = (voltage - .5) * 100;
-  //Serial.print(", Volts: ");
-  //Serial.print(voltage);
-  //Serial.print(", degrees C: ");
-  Serial.print("Temperature:");
-  Serial.println(temperature);
+  float temperature = (voltage - 0.5) * 100;
+//  Serial.print("Temperature (degrees C):");
+//  Serial.println(temperature);
+  data["temperature"] = temperature;
 
   // -- Light --
   sensorVal = analogRead(lightPin);
   //Serial.print(", Light Sensor Value: ");
-  Serial.print("Light:");
-  Serial.println(sensorVal);
+//  Serial.print("Light:");
+//  Serial.println(sensorVal);
+  data["light"] = sensorVal;
+//
+//  Serial.print("JSON Packet:");
+  data.printTo(Serial);
+  Serial.println();
 
   // Delay querying of data
   delay(2000);
