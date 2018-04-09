@@ -34,5 +34,5 @@ void loop() {
   Serial.println();
 
   // Delay querying of data
-  delay(2000);
+  delay(1000);
 }
